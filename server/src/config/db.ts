@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ENV } from './env';
+import { ENV } from './env.js';
 
 export async function connectDB() {
   if (!ENV.MONGODB_URI) {

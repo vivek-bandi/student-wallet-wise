@@ -1,13 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import { connectDB } from './config/db';
-import { ENV } from './config/env';
-import authRoutes from './routes/auth';
-import expenseRoutes from './routes/expenses';
-import categoryRoutes from './routes/categories';
-import budgetRoutes from './routes/budgets';
-import recurringRoutes from './routes/recurring';
-import statsRoutes from './routes/stats';
+import { connectDB } from './config/db.js';
+import { ENV } from './config/env.js';
+import authRoutes from './routes/auth.js';
+import expenseRoutes from './routes/expenses.js';
+import categoryRoutes from './routes/categories.js';
+import budgetRoutes from './routes/budgets.js';
+import recurringRoutes from './routes/recurring.js';
+import statsRoutes from './routes/stats.js';
 
 const app = express();
 app.use(cors());

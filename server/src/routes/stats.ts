@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { Expense } from '../models/Expense';
-import { auth, AuthRequest } from '../middleware/auth';
+import { Expense } from '../models/Expense.js';
+import { auth, AuthRequest } from '../middleware/auth.js';
 import mongoose from 'mongoose';
 
 const router = Router();

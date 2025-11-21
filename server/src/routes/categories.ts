@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { Category } from '../models/Category';
-import { auth, AuthRequest } from '../middleware/auth';
+import { Category } from '../models/Category.js';
+import { auth, AuthRequest } from '../middleware/auth.js';
 import { z } from 'zod';
 import mongoose from 'mongoose';
 

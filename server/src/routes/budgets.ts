@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { Budget } from '../models/Budget';
-import { Expense } from '../models/Expense';
-import { auth, AuthRequest } from '../middleware/auth';
+import { Budget } from '../models/Budget.js';
+import { Expense } from '../models/Expense.js';
+import { auth, AuthRequest } from '../middleware/auth.js';
 import { z } from 'zod';
 import mongoose from 'mongoose';
 

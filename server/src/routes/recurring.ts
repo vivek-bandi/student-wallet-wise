@@ -1,7 +1,7 @@
 import { Router, Response } from 'express';
-import { RecurringExpense } from '../models/RecurringExpense';
-import { Expense } from '../models/Expense';
-import { auth, AuthRequest } from '../middleware/auth';
+import { RecurringExpense } from '../models/RecurringExpense.js';
+import { Expense } from '../models/Expense.js';
+import { auth, AuthRequest } from '../middleware/auth.js';
 import { z } from 'zod';
 import mongoose from 'mongoose';
 
