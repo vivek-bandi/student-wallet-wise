@@ -19,7 +19,7 @@ interface Transaction {
 
 const Dashboard = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [budget, setBudget] = useState(5000);
+  const [budget] = useState(5000);
   const [savings] = useState(1200);
   const [isLoading, setIsLoading] = useState(true);
   const { user, token, logout } = useAuth();
