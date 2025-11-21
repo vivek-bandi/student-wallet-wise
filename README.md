@@ -71,3 +71,78 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Backend (Express + MongoDB)
+
+The project now includes a Node.js/Express backend under `server/` providing authentication, expenses, categories, budgets, recurring expenses, and stats.
+
+### Environment Variables
+Create a `.env` at the repository root:
+```
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=super_secret_change_me
+PORT=4000
+```
+
+### Install & Run
+```bash
+npm install
+npm run server   # backend (http://localhost:4000)
+npm run dev      # frontend (http://localhost:5173 by default)
+# or both
+npm run dev:full
+```
+
+### API Endpoints (Summary)
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | /api/health | Health check |
+| POST | /api/auth/register | Create user (email, password, name) |
+| POST | /api/auth/login | Login returns `{ token, user }` |
+| POST | /api/expenses | Create expense |
+| GET | /api/expenses | List expenses (`?month=YYYY-MM` optional) |
+| GET | /api/expenses/recent | Last 10 expenses for dashboard |
+| GET | /api/expenses/stats/categories | Category totals (`?month=`) |
+| DELETE | /api/expenses/:id | Delete expense |
+| POST | /api/categories | Create category |
+| GET | /api/categories | List categories |
+| DELETE | /api/categories/:id | Delete category |
+| PUT | /api/budgets | Upsert monthly budget `{ month, amount }` |
+| GET | /api/budgets/:month | Get budget summary `{ budget, spent, remaining }` |
+| POST | /api/recurring | Create recurring expense |
+| GET | /api/recurring | List recurring expenses |
+| PUT | /api/recurring/:id/toggle | Toggle active state |
+| POST | /api/recurring/run | Manually run due recurring items |
+| GET | /api/stats/summary | Current month total + percent change |
+
+Protected endpoints require `Authorization: Bearer <token>` header.
+
+### Model Shapes (Simplified)
+```
+User: { email, passwordHash, name }
+Expense: { userId, description, category, amount, date }
+Category: { userId, name }
+Budget: { userId, month, amount }
+RecurringExpense: { userId, description, category, amount, interval, startDate, nextRun, active }
+```
+
+### Frontend Integration
+Fetch recent expenses for `RecentTransactions`:
+```ts
+const res = await fetch('/api/expenses/recent', { headers: { Authorization: `Bearer ${token}` }});
+const transactions = await res.json();
+```
+Chart data from `/api/expenses/stats/categories?month=YYYY-MM` already matches `{ category, amount }`.
+
+Budget panel from `/api/budgets/2025-11` response.
+
+### Recurring Runner
+Call `/api/recurring/run` to generate due expenses (later replace with scheduled job/cron).
+
+### Next Improvements
+- Pagination & filtering
+- Password reset / email verification
+- Better validation & error envelopes
+- Automated recurring job (cron, serverless)
+- Role-based access if needed
+
