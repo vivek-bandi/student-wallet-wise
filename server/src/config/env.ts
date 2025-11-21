@@ -5,7 +5,7 @@ import path from 'path';
 dotenv.config({ path: path.join(__dirname, '../../.env') });
 
 export const ENV = {
-  PORT: process.env.PORT || '4000',
+  PORT: process.env.PORT || '3000',
   MONGODB_URI: process.env.MONGODB_URI || '',
   JWT_SECRET: process.env.JWT_SECRET || 'dev_secret_change_me'
 };
