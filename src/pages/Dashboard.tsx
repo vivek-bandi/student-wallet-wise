@@ -31,35 +31,36 @@ const Dashboard = () => {
       navigate('/login');
       return;
     }
-    fetchExpenses();
-  }, [token, navigate]);
+    
+    const fetchExpenses = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+        const response = await fetch(`${apiUrl}/api/expenses/recent`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-  const fetchExpenses = async () => {
-    try {
-      const apiUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
-      const response = await fetch(`${apiUrl}/api/expenses/recent`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+        if (!response.ok) {
+          throw new Error('Failed to fetch expenses');
+        }
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch expenses');
+        const data = await response.json();
+        setTransactions(data);
+      } catch (error) {
+        console.error('Error fetching expenses:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load expenses",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
       }
-
-      const data = await response.json();
-      setTransactions(data);
-    } catch (error) {
-      console.error('Error fetching expenses:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load expenses",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    };
+    
+    fetchExpenses();
+  }, [token, navigate, toast]);
 
   const handleAddExpense = async (expense: Omit<Transaction, "id">) => {
     try {

@@ -118,22 +118,45 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/c
 
 The project now includes a Node.js/Express backend under `server/` providing authentication, expenses, categories, budgets, recurring expenses, and stats.
 
+### Backend Deployment
+The server has its own `package.json` file in the `server/` directory for independent deployment.
+
+To deploy the server separately:
+```bash
+cd server
+npm install
+npm start  # or npm run dev for development
+```
+
 ### Environment Variables
-Create a `.env` at the repository root:
+Create environment files:
+1. `.env` at the repository root (for frontend):
+```
+VITE_API_BASE_URL=http://localhost:3000
+```
+
+2. `server/.env` in the server directory (for backend):
 ```
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=super_secret_change_me
-PORT=4000
+PORT=3000
 ```
 
 ### Install & Run
 ```bash
 npm install
-npm run server   # backend (http://localhost:4000)
+npm run server   # backend (http://localhost:3000)
 npm run dev      # frontend (http://localhost:5173 by default)
 # or both
 npm run dev:full
 ```
+
+### Authentication Flow
+1. Visit the home page at `http://localhost:5173`
+2. Click "Sign Up" to create a new account
+3. After signup, you'll be automatically logged in and redirected to the dashboard
+4. The dashboard shows your expenses with options to add new expenses
+5. Click "Logout" to sign out
 
 ### API Endpoints (Summary)
 | Method | Path | Purpose |
